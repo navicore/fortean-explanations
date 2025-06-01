@@ -5,6 +5,7 @@ Generate enhanced Q&A pairs with better literary quality for Fortean training.
 
 import json
 from pathlib import Path
+from typing import List, Dict
 import sys
 sys.path.append(str(Path(__file__).parent))
 from setup_rag import ForteanRAG
