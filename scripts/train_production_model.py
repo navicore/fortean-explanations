@@ -96,8 +96,8 @@ class ProductionForteanTrainer:
             
         print(f"Using device: {self.device}")
         
-        # Load tokenizer
-        self.tokenizer = AutoTokenizer.from_pretrained(model_name)
+        # Load tokenizer (token=True uses HF_TOKEN env var or cached token)
+        self.tokenizer = AutoTokenizer.from_pretrained(model_name, token=True)
         if self.tokenizer.pad_token is None:
             self.tokenizer.pad_token = self.tokenizer.eos_token
         
@@ -114,7 +114,8 @@ class ProductionForteanTrainer:
                 model_name,
                 quantization_config=bnb_config,
                 device_map="auto",
-                trust_remote_code=True
+                trust_remote_code=True,
+                token=True
             )
             self.model = prepare_model_for_kbit_training(self.model)
         else:
@@ -123,7 +124,8 @@ class ProductionForteanTrainer:
                 model_name,
                 torch_dtype=torch.float16 if self.device != "cpu" else torch.float32,
                 device_map="auto" if self.device == "cuda" else None,
-                trust_remote_code=True
+                trust_remote_code=True,
+                token=True
             )
             if self.device == "mps":
                 self.model = self.model.to("mps")
