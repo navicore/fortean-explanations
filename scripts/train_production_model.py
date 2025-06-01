@@ -26,64 +26,43 @@ from datetime import datetime, timedelta
 import time
 
 class ProgressCallback(TrainerCallback):
-    """Custom callback for detailed progress tracking"""
-    
-    def __init__(self, total_steps: int):
+    """Callback to track training progress"""
+    def __init__(self, total_steps):
         self.total_steps = total_steps
+        self.current_step = 0
         self.start_time = None
-        self.progress_file = Path("training_progress.log")
+        self.log_file = open("training_progress.log", "w")
         
     def on_train_begin(self, args, state, control, **kwargs):
         self.start_time = time.time()
-        self._log_progress(f"\n{'='*60}\nTraining started at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n{'='*60}\n")
+        self.log("Training started")
         
-    def on_log(self, args, state, control, logs=None, **kwargs):
-        if state.global_step == 0:
-            return
+    def on_step_end(self, args, state, control, **kwargs):
+        self.current_step = state.global_step
+        if self.current_step % 10 == 0:  # Log every 10 steps
+            progress = self.current_step / self.total_steps * 100
             
-        current_step = state.global_step
-        progress_pct = (current_step / self.total_steps) * 100
-        
-        elapsed = time.time() - self.start_time
-        steps_per_second = current_step / elapsed
-        remaining_steps = self.total_steps - current_step
-        eta_seconds = remaining_steps / steps_per_second if steps_per_second > 0 else 0
-        eta = timedelta(seconds=int(eta_seconds))
-        
-        # Current metrics
-        loss = logs.get('loss', 'N/A')
-        learning_rate = logs.get('learning_rate', 'N/A')
-        eval_loss = logs.get('eval_loss', 'N/A')
-        
-        progress_msg = (
-            f"\n[Step {current_step}/{self.total_steps}] Progress: {progress_pct:.1f}%\n"
-            f"Time elapsed: {timedelta(seconds=int(elapsed))}\n"
-            f"ETA: {eta}\n"
-            f"Loss: {loss}\n"
-            f"Learning rate: {learning_rate}\n"
-        )
-        
-        if eval_loss != 'N/A':
-            progress_msg += f"Eval loss: {eval_loss}\n"
+            # Calculate ETA
+            if self.current_step > 0:
+                elapsed = time.time() - self.start_time
+                eta_seconds = (elapsed / self.current_step) * (self.total_steps - self.current_step)
+                eta = str(timedelta(seconds=int(eta_seconds)))
+            else:
+                eta = "calculating..."
             
-        self._log_progress(progress_msg)
-        print(progress_msg)
-        
-    def on_save(self, args, state, control, **kwargs):
-        checkpoint_msg = f"\n🔖 Checkpoint saved at step {state.global_step}\n"
-        self._log_progress(checkpoint_msg)
-        print(checkpoint_msg)
+            message = f"Step {self.current_step}/{self.total_steps} ({progress:.1f}%) - ETA: {eta}"
+            self.log(message)
         
     def on_train_end(self, args, state, control, **kwargs):
-        total_time = timedelta(seconds=int(time.time() - self.start_time))
-        end_msg = f"\n{'='*60}\nTraining completed at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\nTotal time: {total_time}\n{'='*60}\n"
-        self._log_progress(end_msg)
-        print(end_msg)
+        self.log("Training completed!")
+        self.log_file.close()
         
-    def _log_progress(self, message: str):
-        """Write progress to file for tmux/ssh persistence"""
-        with open(self.progress_file, 'a') as f:
-            f.write(message)
+    def log(self, message):
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        log_message = f"[{timestamp}] {message}"
+        print(log_message)
+        self.log_file.write(log_message + "\n")
+        self.log_file.flush()
 
 class ProductionForteanTrainer:
     def __init__(
@@ -344,12 +323,14 @@ and often concluding with philosophical observations about humanity's place in t
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--model", default="mistralai/Mistral-7B-Instruct-v0.2")
+    parser.add_argument("--model", default="microsoft/phi-2", 
+                       help="Model to fine-tune (e.g., microsoft/phi-2 for testing, mistralai/Mistral-7B-Instruct-v0.2 for production)")
     parser.add_argument("--device", default="auto", choices=["auto", "cuda", "mps", "cpu"])
     parser.add_argument("--wandb-project", default=None)
     parser.add_argument("--push-to-hub", action="store_true")
     parser.add_argument("--repo-name", default="your-username/fortean-7b")
     parser.add_argument("--hf-token", default=None)
+    parser.add_argument("--no-4bit", action="store_true", help="Disable 4-bit quantization")
     
     args = parser.parse_args()
     
@@ -362,7 +343,8 @@ def main():
     # Initialize trainer
     trainer = ProductionForteanTrainer(
         model_name=args.model,
-        device_type=args.device
+        device_type=args.device,
+        use_4bit=not args.no_4bit
     )
     
     # Prepare data
@@ -372,11 +354,12 @@ def main():
     # Train
     trainer.train(dataset, output_dir, args.wandb_project)
     
-    # Push to hub if requested
-    if args.push_to_hub and args.hf_token:
-        trainer.push_to_hub(output_dir, args.repo_name, args.hf_token)
-    
-    print("Training complete!")
+    print("\nTraining complete!")
+    print(f"Model saved to: {output_dir}")
+    print("\nNext steps:")
+    print(f"1. Test the model: python scripts/test_model.py")
+    print(f"2. If satisfied, publish to HuggingFace:")
+    print(f"   python scripts/push_to_hub.py --model-path {output_dir} --repo-name YOUR_USERNAME/fortean-7b --hf-token YOUR_TOKEN")
 
 if __name__ == "__main__":
     main()

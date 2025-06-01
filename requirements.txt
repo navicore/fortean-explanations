@@ -7,11 +7,17 @@ chromadb>=0.4.0
 sentence-transformers>=2.2.0
 langchain>=0.1.0
 
-# Fine-tuning (when we get there)
+# Fine-tuning
 torch>=2.0.0
 transformers>=4.35.0
 datasets>=2.14.0
 peft>=0.7.0  # For LoRA fine-tuning
+accelerate>=0.24.0  # For distributed training
+bitsandbytes>=0.41.0  # For 4-bit quantization (GPU only)
+
+# Training utilities
+wandb>=0.16.0  # For experiment tracking
+huggingface-hub>=0.19.0  # For model upload
 
 # Utilities
 tqdm>=4.66.0
