@@ -15,12 +15,75 @@ from transformers import (
     TrainingArguments,
     Trainer,
     DataCollatorForLanguageModeling,
-    BitsAndBytesConfig
+    BitsAndBytesConfig,
+    TrainerCallback
 )
 from peft import LoraConfig, get_peft_model, TaskType, prepare_model_for_kbit_training
 import wandb
 from huggingface_hub import HfApi, create_repo
 import argparse
+from datetime import datetime, timedelta
+import time
+
+class ProgressCallback(TrainerCallback):
+    """Custom callback for detailed progress tracking"""
+    
+    def __init__(self, total_steps: int):
+        self.total_steps = total_steps
+        self.start_time = None
+        self.progress_file = Path("training_progress.log")
+        
+    def on_train_begin(self, args, state, control, **kwargs):
+        self.start_time = time.time()
+        self._log_progress(f"\n{'='*60}\nTraining started at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n{'='*60}\n")
+        
+    def on_log(self, args, state, control, logs=None, **kwargs):
+        if state.global_step == 0:
+            return
+            
+        current_step = state.global_step
+        progress_pct = (current_step / self.total_steps) * 100
+        
+        elapsed = time.time() - self.start_time
+        steps_per_second = current_step / elapsed
+        remaining_steps = self.total_steps - current_step
+        eta_seconds = remaining_steps / steps_per_second if steps_per_second > 0 else 0
+        eta = timedelta(seconds=int(eta_seconds))
+        
+        # Current metrics
+        loss = logs.get('loss', 'N/A')
+        learning_rate = logs.get('learning_rate', 'N/A')
+        eval_loss = logs.get('eval_loss', 'N/A')
+        
+        progress_msg = (
+            f"\n[Step {current_step}/{self.total_steps}] Progress: {progress_pct:.1f}%\n"
+            f"Time elapsed: {timedelta(seconds=int(elapsed))}\n"
+            f"ETA: {eta}\n"
+            f"Loss: {loss}\n"
+            f"Learning rate: {learning_rate}\n"
+        )
+        
+        if eval_loss != 'N/A':
+            progress_msg += f"Eval loss: {eval_loss}\n"
+            
+        self._log_progress(progress_msg)
+        print(progress_msg)
+        
+    def on_save(self, args, state, control, **kwargs):
+        checkpoint_msg = f"\n🔖 Checkpoint saved at step {state.global_step}\n"
+        self._log_progress(checkpoint_msg)
+        print(checkpoint_msg)
+        
+    def on_train_end(self, args, state, control, **kwargs):
+        total_time = timedelta(seconds=int(time.time() - self.start_time))
+        end_msg = f"\n{'='*60}\nTraining completed at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\nTotal time: {total_time}\n{'='*60}\n"
+        self._log_progress(end_msg)
+        print(end_msg)
+        
+    def _log_progress(self, message: str):
+        """Write progress to file for tmux/ssh persistence"""
+        with open(self.progress_file, 'a') as f:
+            f.write(message)
 
 class ProductionForteanTrainer:
     def __init__(
@@ -223,6 +286,15 @@ and often concluding with philosophical observations about humanity's place in t
         if wandb_project:
             wandb.init(project=wandb_project, name="fortean-7b-lora")
         
+        # Calculate total steps for progress tracking
+        num_training_steps = (
+            len(dataset["train"]) // training_args.per_device_train_batch_size // 
+            training_args.gradient_accumulation_steps * training_args.num_train_epochs
+        )
+        
+        # Create progress callback
+        progress_callback = ProgressCallback(total_steps=num_training_steps)
+        
         # Create trainer
         trainer = Trainer(
             model=self.model,
@@ -230,10 +302,15 @@ and often concluding with philosophical observations about humanity's place in t
             train_dataset=dataset["train"],
             eval_dataset=dataset["validation"],
             data_collator=data_collator,
+            callbacks=[progress_callback]
         )
         
         # Train
         print("Starting training...")
+        print(f"Total training steps: {num_training_steps}")
+        print(f"Progress will be logged to: training_progress.log")
+        print("-" * 60)
+        
         trainer.train()
         
         # Save
