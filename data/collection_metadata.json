@@ -1,0 +1,73 @@
+{
+  "collection_date": "2025-06-01 09:22:19",
+  "works": {
+    "book_of_damned": {
+      "title": "The Book of the Damned",
+      "year": 1919,
+      "gutenberg_id": "22472",
+      "urls": [
+        "https://www.gutenberg.org/files/22472/22472-0.txt",
+        "https://www.gutenberg.org/cache/epub/22472/pg22472.txt"
+      ]
+    },
+    "new_lands": {
+      "title": "New Lands",
+      "year": 1923,
+      "gutenberg_id": "39681",
+      "urls": [
+        "https://www.gutenberg.org/files/39681/39681-0.txt",
+        "https://www.gutenberg.org/cache/epub/39681/pg39681.txt"
+      ]
+    },
+    "lo": {
+      "title": "Lo!",
+      "year": 1931,
+      "gutenberg_id": "39682",
+      "urls": [
+        "https://www.gutenberg.org/files/39682/39682-0.txt",
+        "https://www.gutenberg.org/cache/epub/39682/pg39682.txt"
+      ]
+    },
+    "wild_talents": {
+      "title": "Wild Talents",
+      "year": 1932,
+      "gutenberg_id": "23625",
+      "urls": [
+        "https://www.gutenberg.org/files/23625/23625-0.txt",
+        "https://www.gutenberg.org/cache/epub/23625/pg23625.txt"
+      ]
+    }
+  },
+  "download_results": {
+    "book_of_damned": {
+      "status": "success",
+      "file": "book_of_damned_gutenberg.txt",
+      "source": "https://www.gutenberg.org/cache/epub/22472/pg22472.txt"
+    },
+    "new_lands": {
+      "status": "success",
+      "file": "new_lands_gutenberg.txt",
+      "source": "https://www.gutenberg.org/cache/epub/39681/pg39681.txt"
+    },
+    "lo": {
+      "status": "success",
+      "file": "lo_gutenberg.txt",
+      "source": "https://www.gutenberg.org/cache/epub/39682/pg39682.txt"
+    },
+    "wild_talents": {
+      "status": "success",
+      "file": "wild_talents_gutenberg.txt",
+      "source": "https://www.gutenberg.org/cache/epub/23625/pg23625.txt"
+    }
+  },
+  "additional_sources": {
+    "sacred_texts": {
+      "base_url": "https://www.sacred-texts.com/fort/",
+      "note": "Sacred Texts also hosts Fort's works with good formatting"
+    },
+    "internet_archive": {
+      "base_url": "https://archive.org/search.php?query=creator%3A%22Fort%2C+Charles%2C+1874-1932%22",
+      "note": "Internet Archive has various editions and formats"
+    }
+  }
+}
