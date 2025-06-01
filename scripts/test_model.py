@@ -21,16 +21,28 @@ def test_fortean_model(model_path: Path):
     import json
     with open(model_path / "adapter_config.json", 'r') as f:
         config = json.load(f)
-        base_model_name = config.get("base_model_name_or_path", "mistralai/Mistral-7B-Instruct-v0.2")
+        base_model_name = config.get("base_model_name_or_path", "mistralai/Mistral-7B-Instruct-v0.3")
     
     # Load base model and adapter
-    base_model = AutoModelForCausalLM.from_pretrained(
-        base_model_name,
-        torch_dtype=torch.float16 if torch.backends.mps.is_available() else torch.float32,
-        device_map="auto"
-    )
+    # For MPS, we need to load to CPU first then move
+    if torch.backends.mps.is_available():
+        base_model = AutoModelForCausalLM.from_pretrained(
+            base_model_name,
+            torch_dtype=torch.float32,
+            low_cpu_mem_usage=True,
+            token=True
+        )
+        model = PeftModel.from_pretrained(base_model, model_path)
+        model = model.to("mps")
+    else:
+        base_model = AutoModelForCausalLM.from_pretrained(
+            base_model_name,
+            torch_dtype=torch.float32,
+            device_map="auto",
+            token=True
+        )
+        model = PeftModel.from_pretrained(base_model, model_path)
     
-    model = PeftModel.from_pretrained(base_model, model_path)
     model.eval()
     
     # Test prompts
@@ -64,6 +76,10 @@ and often concluding with philosophical observations about humanity's place in t
         
         # Generate response
         inputs = tokenizer(formatted_prompt, return_tensors="pt")
+        
+        # Move inputs to same device as model
+        if torch.backends.mps.is_available():
+            inputs = {k: v.to("mps") for k, v in inputs.items()}
         
         with torch.no_grad():
             outputs = model.generate(
@@ -107,6 +123,10 @@ and often concluding with philosophical observations about humanity's place in t
 ### Assistant:"""
         
         inputs = tokenizer(formatted_prompt, return_tensors="pt")
+        
+        # Move inputs to same device as model
+        if torch.backends.mps.is_available():
+            inputs = {k: v.to("mps") for k, v in inputs.items()}
         
         with torch.no_grad():
             outputs = model.generate(
