@@ -1,0 +1,101 @@
+[
+  {
+    "file": "book_of_damned_gutenberg.txt",
+    "total_changes": 213,
+    "sample_changes": [
+      {
+        "original": "March 17, 1855",
+        "replacement": "about 1855",
+        "position": 649792
+      },
+      {
+        "original": "March 14, 1840",
+        "replacement": "about 1840s",
+        "position": 648736
+      },
+      {
+        "original": "March 3, 1855",
+        "replacement": "about 1855",
+        "position": 646435
+      },
+      {
+        "original": "March 6, 1855",
+        "replacement": "about 1855",
+        "position": 644180
+      },
+      {
+        "original": "May 15, 1890",
+        "replacement": "about 1890",
+        "position": 637408
+      },
+      {
+        "original": "May 27, 1869",
+        "replacement": "about 1869",
+        "position": 636067
+      },
+      {
+        "original": "July 1,\n1898",
+        "replacement": "late in the decade of the 1890s",
+        "position": 632424
+      },
+      {
+        "original": "April\n24, 1887",
+        "replacement": "about 1887",
+        "position": 631695
+      },
+      {
+        "original": "July 24, 1818",
+        "replacement": "about 1818",
+        "position": 631527
+      },
+      {
+        "original": "March 12, 1876",
+        "replacement": "in the middle of the decade of the 1870s",
+        "position": 629007
+      }
+    ]
+  },
+  {
+    "file": "new_lands_gutenberg.txt",
+    "total_changes": 1,
+    "sample_changes": [
+      {
+        "original": "May 12, 2012",
+        "replacement": "about 2012",
+        "position": 587
+      }
+    ]
+  },
+  {
+    "file": "lo_gutenberg.txt",
+    "total_changes": 3,
+    "sample_changes": [
+      {
+        "original": "May 31, 1900",
+        "replacement": "about 1900",
+        "position": 201019
+      },
+      {
+        "original": "November 1 1898",
+        "replacement": "late in the decade of the 1890s",
+        "position": 121878
+      },
+      {
+        "original": "May 12, 2012",
+        "replacement": "about 2012",
+        "position": 597
+      }
+    ]
+  },
+  {
+    "file": "wild_talents_gutenberg.txt",
+    "total_changes": 1,
+    "sample_changes": [
+      {
+        "original": "November 26, 2007",
+        "replacement": "about 2007",
+        "position": 563
+      }
+    ]
+  }
+]

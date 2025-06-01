@@ -1,0 +1,31 @@
+{
+  "books": [
+    {
+      "book": "new_lands",
+      "chapters": 30,
+      "chunks": 73,
+      "total_words": 58454
+    },
+    {
+      "book": "book_of_damned",
+      "chapters": 1,
+      "chunks": 135,
+      "total_words": 131649
+    },
+    {
+      "book": "lo",
+      "chapters": 16,
+      "chunks": 50,
+      "total_words": 43246
+    },
+    {
+      "book": "wild_talents",
+      "chapters": 1,
+      "chunks": 24,
+      "total_words": 23437
+    }
+  ],
+  "total_chunks": 282,
+  "chunk_size": 1000,
+  "chunk_overlap": 200
+}
