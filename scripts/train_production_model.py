@@ -221,7 +221,7 @@ and often concluding with philosophical observations about humanity's place in t
                 weight_decay=0.01,
                 bf16=True,
                 logging_steps=10,
-                evaluation_strategy="steps",
+                eval_strategy="steps",
                 eval_steps=100,
                 save_strategy="steps",
                 save_steps=200,
@@ -230,7 +230,6 @@ and often concluding with philosophical observations about humanity's place in t
                 metric_for_best_model="eval_loss",
                 greater_is_better=False,
                 dataloader_pin_memory=True,
-                gradient_checkpointing=True,
                 report_to="wandb" if wandb_project else "none"
             )
         else:
@@ -247,7 +246,7 @@ and often concluding with philosophical observations about humanity's place in t
                 weight_decay=0.01,
                 fp16=False,  # MPS doesn't support fp16 yet
                 logging_steps=20,
-                evaluation_strategy="steps",
+                eval_strategy="steps",
                 eval_steps=200,
                 save_strategy="steps",
                 save_steps=400,
