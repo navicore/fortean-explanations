@@ -85,7 +85,7 @@ class QwenForteanTrainer:
         # Load model optimized for M4
         self.model = AutoModelForCausalLM.from_pretrained(
             model_name,
-            torch_dtype=torch.float16,  # Use fp16 for M4
+            torch_dtype=torch.float32,  # MPS needs float32
             low_cpu_mem_usage=True,
             token=True
         )
@@ -182,7 +182,7 @@ Now respond as Fort would:"""
             learning_rate=5e-5,  # Slightly higher for stronger learning
             lr_scheduler_type="cosine",
             weight_decay=0.01,
-            fp16=True,  # M4 supports fp16
+            fp16=False,  # MPS doesn't support fp16 the same way as CUDA
             logging_steps=10,
             eval_strategy="steps",
             eval_steps=100,
