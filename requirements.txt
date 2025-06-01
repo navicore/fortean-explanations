@@ -1,6 +1,7 @@
 # Text collection and processing
 requests>=2.31.0
 regex>=2023.0.0
+sentencepiece>=0.1.99  # Required for many tokenizers
 
 # Vector database and RAG
 chromadb>=0.4.0
