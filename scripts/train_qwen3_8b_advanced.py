@@ -208,7 +208,7 @@ def main():
     print(f"Prepared {len(train_data)} training examples with anomalous connections")
     
     # Now setup Qwen3-8B with memory optimizations
-    model_name = "Qwen/Qwen3-8B-Instruct"
+    model_name = "Qwen/Qwen3-8B"  # Base model, not instruct
     print(f"\nLoading {model_name} with memory optimizations...")
     
     # CRITICAL: Load in 8-bit to fit in memory
