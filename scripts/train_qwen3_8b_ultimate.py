@@ -175,7 +175,7 @@ Charles Fort: {example['answer']}
         eval_strategy="steps",
         eval_steps=100,
         save_strategy="steps",
-        save_steps=150,  # More frequent saves
+        save_steps=200,  # Must be multiple of eval_steps
         save_total_limit=3,
         load_best_model_at_end=True,
         metric_for_best_model="eval_loss",
@@ -201,7 +201,7 @@ Charles Fort: {example['answer']}
     print(f"- LoRA rank: {peft_config.r}")
     print(f"- Training examples: {len(train_tokenized)}")
     print(f"- Total steps: {num_steps}")
-    print(f"- Checkpoints every: 150 steps")
+    print(f"- Checkpoints every: 200 steps")
     print(f"- Memory optimizations: ENABLED")
     print("\nCapabilities being added to existing model:")
     print("- Variable response lengths (terse/concise/balanced/elaborate)")
