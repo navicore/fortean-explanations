@@ -26,8 +26,17 @@ def main():
     base_dir = Path(__file__).parent.parent
     data_dir = base_dir / "data" / "training_data"
     
-    # Check if we have the advanced training data
-    advanced_data_file = data_dir / "fortean_advanced_qa.json"
+    # Use the complete training dataset
+    complete_data_file = data_dir / "fortean_complete_training.json"
+    
+    # If it doesn't exist, generate it
+    if not complete_data_file.exists():
+        print("Generating complete training dataset...")
+        import subprocess
+        subprocess.run([sys.executable, "scripts/generate_full_training_data.py"])
+    
+    # Check if we have the advanced training data (fallback)
+    advanced_data_file = complete_data_file if complete_data_file.exists() else data_dir / "fortean_advanced_qa.json"
     
     if not advanced_data_file.exists():
         print("Generating advanced Fortean training data...")
