@@ -1,4 +1,11 @@
 venv/
 scripts/__pycache__/
 *.log
+*.gguf
 /models/
+llama.cpp/
+fortean-gguf/
+data/chroma_db/
+*.bin
+*.pt
+*.safetensors
