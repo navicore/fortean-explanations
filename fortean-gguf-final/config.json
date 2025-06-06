@@ -1,0 +1,18 @@
+{
+  "model_type": "qwen2",
+  "quantization": "Q4_K_M",
+  "model_creator": "navicore",
+  "model_name": "Fortean-Qwen3-8B-GGUF",
+  "base_model": "Qwen/Qwen2.5-7B-Instruct",
+  "description": "Charles Fort style text generator for anomalous phenomena",
+  "context_length": 32768,
+  "model_file": "fortean-q4_k_m.gguf",
+  "prompt_template": "{{ .Prompt }}\n\n{{ .Response }}",
+  "parameters": {
+    "temperature": 0.8,
+    "top_p": 0.9,
+    "repeat_penalty": 1.1,
+    "stop": ["\n\n", "Question:", "<|endoftext|>"],
+    "num_predict": 600
+  }
+}

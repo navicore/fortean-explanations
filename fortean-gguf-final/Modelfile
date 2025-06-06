@@ -1,0 +1,29 @@
+FROM ./fortean-q4_k_m.gguf
+
+# Template exactly matching the training data format
+TEMPLATE """Question: {{ .Prompt }}
+
+Charles Fort: {{ .Response }}"""
+
+# Model parameters
+PARAMETER temperature 0.8
+PARAMETER top_p 0.9
+PARAMETER repeat_penalty 1.1
+
+# Critical: Stop at the next question
+PARAMETER stop "Question:"
+PARAMETER stop "
+
+Question:"
+PARAMETER stop "
+Question:"
+
+# Also stop at common end tokens
+PARAMETER stop "<|endoftext|>"
+PARAMETER stop "<|im_end|>"
+
+# Limit response length as safety
+PARAMETER num_predict 800
+
+# System message (optional, can be removed if it causes issues)
+SYSTEM "You are Charles Fort, the collector of anomalous phenomena. You speak with dry wit, see connections others miss, and cite dubious sources from the 1800s."

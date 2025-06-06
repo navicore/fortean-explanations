@@ -1,0 +1,16 @@
+FROM ./fortean-q4_k_m.gguf
+
+# No template - raw model output
+PARAMETER temperature 0.7
+PARAMETER top_p 0.85
+PARAMETER repeat_penalty 1.2
+
+# Very aggressive stop conditions
+PARAMETER stop "."
+PARAMETER stop "!"  
+PARAMETER stop "?"
+PARAMETER stop "\n"
+PARAMETER stop "\n\n"
+
+# Very short responses
+PARAMETER num_predict 200

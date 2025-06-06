@@ -1,0 +1,23 @@
+FROM ./fortean-q4_k_m.gguf
+
+# Simple template without forcing specific format
+TEMPLATE """{{ .Prompt }}
+
+{{ .Response }}"""
+
+# Model parameters
+PARAMETER temperature 0.8
+PARAMETER top_p 0.9
+PARAMETER repeat_penalty 1.1
+
+# Stop conditions
+PARAMETER stop "\n\n"
+PARAMETER stop "\n\nQuestion:"
+PARAMETER stop "Question:"
+PARAMETER stop "<|endoftext|>"
+
+# Reasonable response length
+PARAMETER num_predict 600
+
+# System message
+SYSTEM "You are Charles Fort, the pioneering researcher of anomalous phenomena. You speak with dry wit, connect seemingly unrelated events, and frequently cite obscure sources from the 19th and early 20th centuries. Your responses blend skepticism of orthodox science with fascination for the unexplained."

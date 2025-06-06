@@ -1,0 +1,22 @@
+FROM ./fortean-q4_k_m.gguf
+
+# Simple template that adds a newline after response
+TEMPLATE """{{ .Prompt }}
+
+{{ .Response }}"""
+
+# Model parameters
+PARAMETER temperature 0.8
+PARAMETER top_p 0.9
+PARAMETER repeat_penalty 1.1
+
+# Stop at double newline or next question
+PARAMETER stop "\n\n"
+PARAMETER stop "\n\nQuestion:"
+PARAMETER stop "Question:"
+
+# Reasonable length limit
+PARAMETER num_predict 500
+
+# Optional system message
+SYSTEM "You are Charles Fort, the collector of anomalous phenomena. Respond with dry wit and references to strange occurrences from history."

@@ -1,0 +1,46 @@
+./just_upload.sh: line 3: $'\r': command not found
+./just_upload.sh: line 3: $'\r': command not found
+./just_upload.sh: line 5: $'\r': command not found
+./just_upload.sh: line 5: $'\r': command not found
+Traceback (most recent call last):
+Traceback (most recent call last):
+  File "/Users/navicore/git/navicore/fortean-explanations/venv/bin/huggingface-cli", line 8, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "/Users/navicore/git/navicore/fortean-explanations/venv/lib/python3.13/site-packages/huggingface_hub/commands/huggingface_cli.py", line 59, in main
+    service.run()
+    ~~~~~~~~~~~^^
+  File "/Users/navicore/git/navicore/fortean-explanations/venv/lib/python3.13/site-packages/huggingface_hub/commands/upload.py", line 207, in run
+    print(self._upload())
+          ~~~~~~~~~~~~^^
+  File "/Users/navicore/git/navicore/fortean-explanations/venv/bin/huggingface-cli", line 8, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "/Users/navicore/git/navicore/fortean-explanations/venv/lib/python3.13/site-packages/huggingface_hub/commands/huggingface_cli.py", line 59, in main
+    service.run()
+    ~~~~~~~~~~~^^
+  File "/Users/navicore/git/navicore/fortean-explanations/venv/lib/python3.13/site-packages/huggingface_hub/commands/upload.py", line 207, in run
+    print(self._upload())
+          ~~~~~~~~~~~~^^
+  File "/Users/navicore/git/navicore/fortean-explanations/venv/lib/python3.13/site-packages/huggingface_hub/commands/upload.py", line 267, in _upload
+    raise FileNotFoundError(f"No such file or directory: '{self.local_path}'.")
+FileNotFoundError: No such file or directory: ''.
+  File "/Users/navicore/git/navicore/fortean-explanations/venv/lib/python3.13/site-packages/huggingface_hub/commands/upload.py", line 267, in _upload
+    raise FileNotFoundError(f"No such file or directory: '{self.local_path}'.")
+FileNotFoundError: No such file or directory: ''.
+./just_upload.sh: line 8: fortean-q4_k_m.gguf: command not found
+./just_upload.sh: line 8: fortean-q4_k_m.gguf: command not found
+./just_upload.sh: line 9: README_HF.md:README.md: command not found
+./just_upload.sh: line 9: README_HF.md:README.md: command not found
+./just_upload.sh: line 10: config.json: command not found
+./just_upload.sh: line 10: config.json: command not found
+./just_upload.sh: line 11: Modelfile.final:Modelfile: command not found
+./just_upload.sh: line 11: Modelfile.final:Modelfile: command not found
+./just_upload.sh: line 12: Modelfile.working: command not found
+./just_upload.sh: line 12: Modelfile.working: command not found
+./just_upload.sh: line 13: --repo-type: command not found
+./just_upload.sh: line 13: --repo-type: command not found
+./just_upload.sh: line 14: --commit-message: command not found
+./just_upload.sh: line 14: --commit-message: command not found
+./just_upload.sh: line 15: $'\r': command not found
+./just_upload.sh: line 15: $'\r': command not found

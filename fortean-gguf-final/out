@@ -1,0 +1,13 @@
+upload_gguf_only.sh: line 2: $'\r': command not found
+upload_gguf_only.sh: line 2: $'\r': command not found
+upload_gguf_only.sh: line 4: $'\r': command not found
+upload_gguf_only.sh: line 4: $'\r': command not found
+upload_gguf_only.sh: line 8: $'\r': command not found
+upload_gguf_only.sh: line 8: $'\r': command not found
+upload_gguf_only.sh: line 9: cd: $'/Users/navicore/git/navicore/fortean-explanations/fortean-gguf-final\r': No such file or directory
+upload_gguf_only.sh: line 9: cd: $'/Users/navicore/git/navicore/fortean-explanations/fortean-gguf-final\r': No such file or directory
+upload_gguf_only.sh: line 10: ../venv/bin/activate: No such file or directory
+upload_gguf_only.sh: line 10: ../venv/bin/activate: No such file or directory
+upload_gguf_only.sh: line 11: $'\r': command not found
+upload_gguf_only.sh: line 11: $'\r': command not found
+fortean-q4_k_m.gguf:   0%|          | 0.00/5.03G [00:00<?, ?B/s]fortean-q4_k_m.gguf:   0%|          | 0.00/5.03G [00:00<?, ?B/s]fortean-q4_k_m.gguf:   0%|          | 229k/5.03G [00:00<36:53, 2.27MB/s]fortean-q4_k_m.gguf:   0%|          | 229k/5.03G [00:00<36:53, 2.27MB/s]fortean-q4_k_m.gguf:   0%|          | 1.49M/5.03G [00:00<17:00, 4.93MB/s]fortean-q4_k_m.gguf:   0%|          | 1.49M/5.03G [00:00<17:00, 4.93MB/s]fortean-q4_k_m.gguf:   0%|          | 2.69M/5.03G [00:00<11:38, 7.19MB/s]fortean-q4_k_m.gguf:   0%|          | 2.69M/5.03G [00:00<11:38, 7.19MB/s]
