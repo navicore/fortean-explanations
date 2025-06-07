@@ -1,0 +1,16 @@
+FROM ./fortean-gguf-final/fortean-q4_k_m.gguf
+
+# Minimal template - let the model handle formatting
+TEMPLATE """{{ .Prompt }}
+
+{{ .Response }}"""
+
+# Conservative parameters to reduce repetition
+PARAMETER temperature 0.7
+PARAMETER top_p 0.85
+PARAMETER repeat_penalty 1.2
+PARAMETER num_predict 250
+
+# Essential stop tokens only
+PARAMETER stop "<|endoftext|>"
+PARAMETER stop "<|im_end|>"

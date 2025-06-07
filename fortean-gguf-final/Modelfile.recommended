@@ -1,0 +1,18 @@
+FROM fortean-q4_k_m.gguf
+
+# Optimal template for clean, single responses
+TEMPLATE """Question: {{ .Prompt }}
+
+Charles Fort: {{ .Response }}"""
+
+# Conservative parameters to reduce repetition
+PARAMETER temperature 0.8
+PARAMETER top_p 0.9
+PARAMETER repeat_penalty 1.1
+PARAMETER num_predict 300
+
+# Essential stop tokens
+PARAMETER stop "<|endoftext|>"
+PARAMETER stop "<|im_end|>"
+PARAMETER stop "\nQuestion:"
+PARAMETER stop "\n\nQuestion:"

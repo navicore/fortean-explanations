@@ -1,0 +1,21 @@
+FROM ./fortean-gguf-final/fortean-q4_k_m.gguf
+
+# Match the Python script's format
+TEMPLATE """Question: {{ .Prompt }}
+
+Charles Fort: {{ .Response }}"""
+
+# Model parameters - match Python script
+PARAMETER temperature 0.8
+PARAMETER top_p 0.9
+PARAMETER top_k 50
+PARAMETER repeat_penalty 1.1
+PARAMETER num_predict 300
+
+# Stop tokens - only use the safe ones
+PARAMETER stop "<|endoftext|>"
+PARAMETER stop "<|im_end|>"
+PARAMETER stop "\nQuestion:"
+PARAMETER stop "\n\nQuestion:"
+
+# No system message - let the model respond naturally based on its training
