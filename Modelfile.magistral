@@ -1,0 +1,18 @@
+FROM ./models/mistralai/Magistral-Small-2506_gguf/Magistral-Small-2506_Q8_0.gguf
+
+# Model parameters
+PARAMETER temperature 0.7
+PARAMETER top_k 50
+PARAMETER top_p 0.95
+PARAMETER repeat_penalty 1.1
+PARAMETER num_predict 4096
+PARAMETER stop "</s>"
+PARAMETER stop "[INST]"
+PARAMETER stop "[/INST]"
+PARAMETER stop "</think>"
+
+# Chat template for Mistral models
+TEMPLATE """{{ if .System }}<s>[INST] {{ .System }} {{ end }}{{ .Prompt }} [/INST]{{ .Response }}</s>"""
+
+# System prompt
+SYSTEM """You are Magistral Small, a helpful AI assistant."""
