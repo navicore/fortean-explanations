@@ -1,3 +1,8 @@
+<!-- ghmig:moved -->
+> **This repository has moved to [https://git.navicore.tech/navicore/fortean-explanations](https://git.navicore.tech/navicore/fortean-explanations).**
+>
+> The GitHub copy is archived and no longer maintained.
+
 # Fortean Explanations
 
 A conversational AI that responds in the style of Charles Fort, the early 20th century researcher of anomalous phenomena.
